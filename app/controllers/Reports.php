@@ -70,7 +70,7 @@ class Reports extends MY_Controller
         if (!empty($sales)) {
             foreach ($sales as $sale) {
                 $sale->date = intval($sale->date);
-                $daily_sale[$sale->date] = "<table class='table table-condensed table-striped' style='margin-bottom:0;'><tr><td>".lang('total').
+                $daily_sale[$sale->date] = "<table class='table table-condensed table-striped' style='margin-bottom:0;'><tr><td>".lang('subtotal').
                 "</td><td style='text-align:right;'>{$this->tec->formatMoney($sale->total)}</td></tr><tr><td><span style='font-weight:normal;'>".lang('product_tax')."<br>".lang('order_tax')."</span><br>".lang('tax').
                 "</td><td style='text-align:right;'><span style='font-weight:normal;'>{$this->tec->formatMoney($sale->product_tax)}<br>{$this->tec->formatMoney($sale->order_tax)}</span><br>{$this->tec->formatMoney($sale->total_tax)}</td></tr><tr><td class='violet'>".lang('discount').
                 "</td><td style='text-align:right;'>{$this->tec->formatMoney($sale->discount)}</td></tr><tr><td class='violet'>".lang('grand_total').

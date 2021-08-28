@@ -211,11 +211,10 @@ class Pos_model extends CI_Model
         if ($q->num_rows() > 0) {
             $obj = $q->row();
             $obj->tax = $default_vat;  // tax percent
+            $obj->tax = (100+$default_vat)/100;  // tax percent Formula to calculate inclusive tax by Client
             $obj->original_price = $obj->store_price > 0 ? $obj->store_price : $obj->price; 
-            $obj->price = $obj->price - (($obj->price*$obj->tax)/100);
-            $obj->store_price = $obj->store_price - (($obj->store_price*$obj->tax)/100);
-
-             $obj->product_tax = $obj->store_price > 0 ? $obj->original_price - $obj->store_price : $obj->original_price - $obj->price;
+            $price_withoutTax = $obj->price > 0 ? $obj->price/($obj->tax) : $obj->store_price/($obj->tax);
+            $obj->product_tax = $obj->original_price - $price_withoutTax;
             
             return $obj;
         }
@@ -266,10 +265,18 @@ class Pos_model extends CI_Model
         if ($q->num_rows() > 0) {
             foreach (($q->result()) as $row) {
                 $row->tax = $default_vat;  // tax percent
+                $row->tax = (100+$default_vat)/100;  // tax percent
                 $row->original_price = $row->store_price > 0 ? $row->store_price : $row->price; 
-                $row->price = $row->price - (($row->price*$row->tax)/100);
-                $row->store_price = $row->store_price - (($row->store_price*$row->tax)/100);
-                $row->product_tax = $row->store_price > 0 ? $row->original_price - $row->store_price : $row->original_price - $row->price; // inclusive tax
+                
+                //$row->price = $row->price/$row->tax;
+                //$row->store_price = $row->store_price/$row->tax;
+               /* $row->price = $row->price - (($row->price*$row->tax)/100);
+                $row->store_price = $row->store_price - (($row->store_price*$row->tax)/100);*/
+
+               // $row->product_tax = $row->store_price > 0 ? $row->original_price - $row->store_price : $row->original_price - $row->price; // inclusive tax
+
+                $price_withoutTax = $row->price > 0 ? $row->price/($row->tax) : $row->store_price/($row->tax);
+                $row->product_tax = $row->original_price - $price_withoutTax;
 
                 $data[] = $row;
             }

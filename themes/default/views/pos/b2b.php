@@ -43,7 +43,7 @@
                     
                         <?php
 
-                            $barcode_content = lang('company_name').': '.$store->name.', '.lang('vat_no').': '.$store->vat_id. ', '.lang('timestamp').': '.date('d-m-Y H:i:s a', strtotime($inv->date)).', '.lang('total_vat').': '.$this->tec->formatMoney($inv->order_tax).', '.lang('total_amount_paid').': '.$this->tec->formatMoney($inv->total);
+                            $barcode_content = lang('company_name').': '.$store->name.', '.lang('vat_no').': '.$store->vat_id. ', '.lang('timestamp').': '.date('d-m-Y H:i:s a', strtotime($inv->date)).', '.lang('total_vat').': '.$this->tec->formatMoney($inv->total_tax).', '.lang('total_amount_paid').': '.$this->tec->formatMoney($inv->total);
 
                             $params['data'] = $barcode_content;
                             echo $this->ciqrcode->generate($params);
@@ -100,7 +100,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Name');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$customer->name;?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -146,7 +146,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Building no.');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->address1) ? $customer->address1 : '';?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -192,7 +192,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Street Name');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->address2) ? $customer->address2 : '';?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -238,7 +238,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('District');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"></td>
                                     </tr>
                                 </table>
                             </td>
@@ -284,7 +284,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('City');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->city) ? $customer->city : '';?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -330,7 +330,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Country');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->country) ? $customer->country : '';?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -376,7 +376,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Postal Code');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->postal_code) ? $customer->postal_code : '';?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -422,7 +422,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Additional No.');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->additional_no) ? $customer->additional_no : '';?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -468,7 +468,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('VAT Number');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->vat_id) ? $customer->vat_id : '' ;?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -514,7 +514,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Other Seller ID');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;">4444</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$customer->other_seller_id;?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -615,7 +615,7 @@
                                     <tr>
                                         <td style="width: 25%;border: 1px solid #ccc;text-align:right;"><?= $this->tec->formatMoney($row->discount); ?></td>
                                         <td style="width: 25%;border: 1px solid #ccc;text-align:right;"><?= $store->vat; ?></td>
-                                        <td style="width: 25%;border: 1px solid #ccc;text-align:right;"><?= $this->tec->formatMoney($row->subtotal - $unit_price_without_vat); ?></td>
+                                        <td style="width: 25%;border: 1px solid #ccc;text-align:right;"><?= $this->tec->formatMoney($row->item_tax); ?></td>
                                         <td style="width: 25%;border: 1px solid #ccc;text-align:right;"><?=$this->tec->formatMoney($row->subtotal);?></td>
                                     </tr>
                                 </table>
@@ -656,13 +656,13 @@
                                         <td style="width:30%;border: 1px solid #ccc;"></td>
                                         <td style="width:25%;border: 1px solid #ccc;text-align: left;"><?=lang('total_vat')?></td>
                                         <td style="width:25%;border: 1px solid #ccc;text-align: right;"><?='إجمالي ضريبة القيمة المضافة';?></td>
-                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;"><?=$this->tec->formatMoney($inv->order_tax);?></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;"><?=$this->tec->formatMoney($inv->total_tax);?></td>
                                     </tr>
                                     <tr>
                                         <td style="width:30%;border: 1px solid #ccc;"></td>
                                         <td style="width:25%;border: 1px solid #ccc;text-align: left;"><?=lang('total_amount_paid')?></td>
                                         <td style="width:25%;border: 1px solid #ccc;text-align: right;"><?='المبلغ الإجمالي المدفوع';?></td>
-                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;"><?= $this->tec->formatMoney($inv->total+$inv->order_tax); ?></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;"><?= $this->tec->formatMoney($inv->total+$inv->total_tax); ?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -671,6 +671,18 @@
                 </td>
             </tr>
         </table>
+        <div style="clear:both; height: 30px;"></div>
+        <table style="width: 100%">
+            <tr>
+                <td style="width: 35%; text-align: left;border: 1px solid #ccc; font-weight: bold;"><?=lang('note');?>:</td>
+                <td style="width: 50%; text-align: right;border: 1px solid #ccc;"><?=nl2br($inv->note);?></td>
+            </tr>
+             <tr>
+                <td style="width: 35%; text-align: left;border: 1px solid #ccc;font-weight: bold;"><?=lang('payment_note');?>:</td>
+                <td style="width: 50%; text-align: right;border: 1px solid #ccc;"><?=nl2br($payments[0]->note);?></td>
+            </tr>
+        </table>
+
         <div style="clear:both; height: 50px;"></div>
         
     </div>

@@ -113,7 +113,7 @@
 
                                         foreach ($sales as $value) {
                                             $value->date = intval($value->date);
-                                            $array[$value->date] = "<table class='table table-condensed table-striped table-calendar' style='margin-bottom:0;'><tr><td style='text-align:left;font-weight:bold;'>".lang('total').
+                                            $array[$value->date] = "<table class='table table-condensed table-striped table-calendar' style='margin-bottom:0;'><tr><td style='text-align:left;font-weight:bold;'>".lang('subtotal').
 
                                             "<br><span style='float:right;font-weight:bold;'>{$this->tec->formatMoney($value->total)}</span></td></tr><tr><td style='text-align:left;font-weight:bold;'><span style='font-weight:normal;'>".lang('product_tax').
                                             "<br><span style='float:right;'>{$this->tec->formatMoney($value->product_tax)}</span><br>".lang('order_tax').

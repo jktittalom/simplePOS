@@ -25,6 +25,42 @@
 							<label class="control-label" for="phone"><?= $this->lang->line("phone"); ?></label>
 							<?= form_input('phone', set_value('phone'), 'class="form-control input-sm" id="phone"');?>
 						</div>
+						<div class="form-group">
+							<label class="control-label" for="address1"><?= $this->lang->line("address1"); ?></label>
+							<?= form_input('address1', set_value('address1'), 'class="form-control input-sm" id="address1"');?>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="address2"><?= $this->lang->line("address2"); ?></label>
+							<?= form_input('address2', set_value('address2'), 'class="form-control input-sm" id="address2"');?>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="city"><?= $this->lang->line("city"); ?></label>
+							<?= form_input('city', set_value('city'), 'class="form-control input-sm" id="city"');?>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="state"><?= $this->lang->line("state"); ?></label>
+							<?= form_input('state', set_value('state'), 'class="form-control input-sm" id="state"');?>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="postal_code"><?= $this->lang->line("postal_code"); ?></label>
+							<?= form_input('postal_code', set_value('postal_code'), 'class="form-control input-sm" id="postal_code"');?>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="country"><?= $this->lang->line("country"); ?></label>
+							<?= form_input('country', set_value('country'), 'class="form-control input-sm" id="country"');?>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="vat_id"><?= $this->lang->line("vat_id"); ?></label>
+							<?= form_input('vat_id', set_value('vat_id'), 'class="form-control input-sm" id="vat_id"');?>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="additional_no"><?= $this->lang->line("additional_no"); ?></label>
+							<?= form_input('additional_no', set_value('additional_no'), 'class="form-control input-sm" id="additional_no"');?>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="other_seller_id"><?= $this->lang->line("other_seller_id"); ?></label>
+							<?= form_input('other_seller_id', set_value('other_seller_id'), 'class="form-control input-sm" id="other_seller_id"');?>
+						</div>
 
 						<div class="form-group">
 							<label class="control-label" for="cf1"><?= $this->lang->line("ccf1"); ?></label>

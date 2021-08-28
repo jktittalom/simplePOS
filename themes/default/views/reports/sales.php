@@ -166,6 +166,7 @@ if ($this->input->post('end_date')) {
                             <?= form_close();?>
                         </div>
                     </div>
+                    
                     <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-sm-12">
@@ -177,7 +178,7 @@ if ($this->input->post('end_date')) {
                                             <th class="col-sm-2"><?= lang("date"); ?></th>
                                             <th class="col-sm-2"><?= lang("customer"); ?></th>
                                             <th class="col-sm-1"><?= lang("total"); ?></th>
-                                            <th class="col-sm-1"><?= lang("tax"); ?></th>
+                                            <th class="col-sm-1"><?= lang("vat"); ?></th>
                                             <th class="col-sm-1"><?= lang("discount"); ?></th>
                                             <th class="col-sm-2"><?= lang("grand_total"); ?></th>
                                             <th class="col-sm-1"><?= lang("paid"); ?></th>

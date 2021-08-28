@@ -316,6 +316,8 @@ class Pos extends MY_Controller
             $order_discount   = 0;
             $percentage       = '%';
             $i                = isset($_POST['product_id']) ? sizeof($_POST['product_id']) : 0;
+
+            $storeInfo = $this->site->getStoreByID($this->session->userdata('store_id'));
             for ($r = 0; $r < $i; $r++) {
                 $item_id         = $_POST['product_id'][$r];
                 $real_unit_price = $this->tec->formatDecimal($_POST['real_unit_price'][$r]);
@@ -406,8 +408,13 @@ class Pos extends MY_Controller
 
                     // By Jiten
                     $store = $this->site->getStoreByID($this->session->userdata('store_id'));
-                    $tax         =  substr($store->vat, 0, -1);
-                    $item_tax    = (($product_details->store_price > 0 ? $product_details->store_price :  $product_details->price) * $tax) / 100;
+                    $tax   =  substr($store->vat, 0, -1);
+                    $finaltax = (100+$tax)/100; 
+
+                    $price = ($product_details->store_price > 0 ? $product_details->store_price :  $product_details->price);
+                    $item_tax = ($price - ($price/$finaltax));
+
+                    //$item_tax    = (($product_details->store_price > 0 ? $product_details->store_price :  $product_details->price) * $tax) / 100;
                     //$item_net_price -= $item_tax;
                     $item_net_price -= $item_tax;
                     $pr_item_tax = $this->tec->formatDecimal(($item_tax * $item_quantity), 4);
@@ -436,6 +443,9 @@ class Pos extends MY_Controller
                     $total += $this->tec->formatDecimal(($item_net_price * $item_quantity), 4);
                 }
             }
+           // echo '<pre>';
+           // print_r($products); die;
+
             if (empty($products)) {
                 $this->form_validation->set_rules('product', lang('order_items'), 'required');
             } else {
@@ -469,6 +479,11 @@ class Pos extends MY_Controller
                 $order_tax_id = null;
                 $order_tax    = 0;
             }
+
+            // by Jiten: For report, as there are only 1 TAX which is VAT on product only
+            $order_tax = 0.00;
+            $order_tax_id = '';
+            ////
 
             $total_tax   = $this->tec->formatDecimal(($product_tax + $order_tax), 4);
             $grand_total = $this->tec->formatDecimal(($total + $total_tax - $order_discount), 4);
@@ -524,6 +539,7 @@ class Pos extends MY_Controller
                     }
                 }
                 $amount  = $this->tec->formatDecimal(($paid > $grand_total ? ($paid - $this->input->post('balance_amount')) : $paid), 4);
+
                 $payment = [
                     'date'        => $date,
                     'amount'      => $amount,
@@ -542,8 +558,12 @@ class Pos extends MY_Controller
                     'note'        => $this->input->post('payment_note'),
                     'pos_paid'    => $this->tec->formatDecimal($this->input->post('amount'), 4),
                     'pos_balance' => $this->tec->formatDecimal($this->input->post('balance_amount'), 4),
-                    'print'     => $this->input->post('printpage') == '' ? 'b2c' : $this->input->post('printpage'), // By Jiten 18 Aug 2021, Default B2C
-                    'printer'     => $this->input->post('printer') == '' ? 3 : $this->input->post('printer'),// By Jiten 18 Aug 2021, default Both
+
+                    //'print'     => $this->input->post('printpage') == '' ? 'b2c' : $this->input->post('printpage'), // By Jiten 18 Aug 2021, Default B2C
+                    //'printer'     => $this->input->post('printer') == '' ? 3 : $this->input->post('printer'), // By Jiten 18 Aug 2021, default Both
+                    'print'       => $storeInfo->customer_type == '1' ? 'b2c' : 'b2b',
+                    'printer'     => $storeInfo->print_type  , // By Jiten 27 Aug 2021, as per client now we will set these setting per store wise
+                    
                 ];
                 $data['paid'] = $amount;
             } else {

@@ -15,7 +15,16 @@
                             <?php
                             $gp[""] = "";
                             foreach ($groups as $group) {
-                                $gp[$group['id']] = $group['name'];
+                                if ($this->Master ){
+                                    $gp[$group['id']] = $group['name'];
+                                } else {
+                                    if($group['id'] == 3){
+                                        continue;
+                                    } else {
+                                        $gp[$group['id']] = $group['name'];
+                                    }
+                                    
+                                }
                             }
                             echo form_dropdown('group', $gp, set_value('group'), 'id="group" data-placeholder="' . lang("select") . ' ' . lang("group") . '" class="form-control input-tip select2" style="width:100%;"');
                             ?>

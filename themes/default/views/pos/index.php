@@ -368,7 +368,7 @@
                                                             <th><?=lang('product')?></th>
                                                             <th style="width: 15%;text-align:center;"><?=lang('price')?></th>
                                                             <th style="width: 15%;text-align:center;"><?=lang('qty')?></th>
-                                                            <th style="width: 20%;text-align:center;"><?=lang('subtotal')?></th>
+                                                            <th style="width: 20%;text-align:center;"><?=lang('total')?></th>
                                                             <th style="width: 20px;" class="satu"><i class="fa fa-trash-o"></i></th>
                                                         </tr>
                                                     </thead>
@@ -394,7 +394,7 @@
                                                     <tr class="info">
                                                         <td width="25%"><?=lang('total_items')?></td>
                                                         <td class="text-right" style="padding-right:10px;"><span id="count">0</span></td>
-                                                        <td width="25%"><?=lang('total')?></td>
+                                                        <td width="25%"><?=lang('subtotal')?></td>
                                                         <td class="text-right" colspan="2"><span id="total">0</span></td>
                                                     </tr>
                                                     <tr class="info">
@@ -504,11 +504,20 @@
                                 </div>
                                 <?php } ?>
 
-                                <div id="item-list">
-                                    <div class="items">
-                                        <?php echo $products; ?>
-                                    </div>
-                                </div>
+                                 <?php if($store->filter_option !== '2') {
+
+                                    //echo "fiter option:".$store->filter_option;
+                                    ?>
+                                        <div id="item-list">
+                                            <div class="items">
+
+                                                <?php echo $products; ?>
+                                            </div>
+                                        </div>
+                                    <?php
+                                 }?>
+
+
                                 <div class="product-nav">
                                     <div class="btn-group btn-group-justified">
                                         <div class="btn-group">
@@ -835,20 +844,28 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <?= lang('A4_print', 'A4 print'); ?>
+                                    <?= lang('customer_type', 'Customer Type'); ?>
                                     <select id="printpage" class="form-control paid_by select2" style="width:100%;">
-                                        <option value="b2c"><?= lang('B2c'); ?></option>
-                                        <option value="b2b"><?= lang('B2b'); ?></option>
+                                        <?php if($store->customer_type == 1) { ?>
+                                        <option value="b2c" selected="selected"><?= lang('B2c'); ?></option>
+                                        <?php } ?>
+                                        <?php if($store->customer_type == 2) { ?>
+                                        <option value="b2b" selected="selected"><?= lang('B2b'); ?></option>
+                                        <?php } ?>
+                                   
                                     </select>
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <?= lang('Printer', 'printer'); ?>
+                                    <?= lang('print_type', 'Print Type'); ?>
                                     <select id="printer" class="form-control paid_by select2" style="width:100%;">
-                                        <option value="1"><?= lang('a4'); ?></option>
-                                        <option value="2"><?= lang('rolls'); ?></option>
-                                        <option value="3"><?= lang('both'); ?></option>
+                                        <?php if($store->print_type == 1) { ?>
+                                        <option value="1" selected="selected"><?= lang('a4'); ?></option>
+                                        <?php } ?>
+                                        <?php if($store->print_type == 2) { ?>
+                                        <option value="2" selected="selected"><?= lang('rolls'); ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -999,6 +1016,88 @@
                                 <?= lang('phone'); ?>
                             </label>
                             <?= form_input('phone', '', 'class="form-control input-sm kb-pad" id="cphone"');?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label" for="address1">
+                                <?= lang('address1'); ?>
+                            </label>
+                            <?= form_input('address1', '', 'class="form-control input-sm kb-text" id="address1"'); ?>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label" for="address2">
+                                <?= lang('address2'); ?>
+                            </label>
+                            <?= form_input('address2', '', 'class="form-control input-sm kb-text" id="address2"');?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label" for="city">
+                                <?= lang('city'); ?>
+                            </label>
+                            <?= form_input('city', '', 'class="form-control input-sm kb-text" id="city"'); ?>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label" for="state">
+                                <?= lang('state'); ?>
+                            </label>
+                            <?= form_input('state', '', 'class="form-control input-sm kb-text" id="state"');?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label" for="postal_code">
+                                <?= lang('postal_code'); ?>
+                            </label>
+                            <?= form_input('postal_code', '', 'class="form-control input-sm kb-text" id="postal_code"'); ?>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label" for="country">
+                                <?= lang('country'); ?>
+                            </label>
+                            <?= form_input('country', '', 'class="form-control input-sm kb-text" id="country"');?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label" for="vat_id">
+                                <?= lang('vat_id'); ?>
+                            </label>
+                            <?= form_input('vat_id', '', 'class="form-control input-sm kb-text" id="vat_id"'); ?>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label" for="additional_no">
+                                <?= lang('additional_no'); ?>
+                            </label>
+                            <?= form_input('additional_no', '', 'class="form-control input-sm kb-text" id="additional_no"');?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label" for="other_seller_id">
+                                <?= lang('other_seller_id'); ?>
+                            </label>
+                            <?= form_input('other_seller_id', '', 'class="form-control input-sm kb-text" id="other_seller_id"'); ?>
                         </div>
                     </div>
                 </div>

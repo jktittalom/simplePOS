@@ -24,6 +24,15 @@ class Customers extends MY_Controller
             $data = ['name' => $this->input->post('name'),
                 'email'     => $this->input->post('email'),
                 'phone'     => $this->input->post('phone'),
+                'address1'     => $this->input->post('address1'),
+                'address2'     => $this->input->post('address2'),
+                'city'     => $this->input->post('city'),
+                'state'     => $this->input->post('state'),
+                'postal_code'     => $this->input->post('postal_code'),
+                'country'     => $this->input->post('country'),
+                'vat_id'     => $this->input->post('vat_id'),
+                'additional_no'     => $this->input->post('additional_no'),
+                'other_seller_id'     => $this->input->post('other_seller_id'),
                 'cf1'       => $this->input->post('cf1'),
                 'cf2'       => $this->input->post('cf2'),
             ];
@@ -89,6 +98,15 @@ class Customers extends MY_Controller
             $data = ['name' => $this->input->post('name'),
                 'email'     => $this->input->post('email'),
                 'phone'     => $this->input->post('phone'),
+                'address1'     => $this->input->post('address1'),
+                'address2'     => $this->input->post('address2'),
+                'city'     => $this->input->post('city'),
+                'state'     => $this->input->post('state'),
+                'postal_code'     => $this->input->post('postal_code'),
+                'country'     => $this->input->post('country'),
+                'vat_id'     => $this->input->post('vat_id'),
+                'additional_no'     => $this->input->post('additional_no'),
+                'other_seller_id'     => $this->input->post('other_seller_id'),
                 'cf1'       => $this->input->post('cf1'),
                 'cf2'       => $this->input->post('cf2'),
             ];
@@ -111,7 +129,7 @@ class Customers extends MY_Controller
     {
         $this->load->library('datatables');
         $this->datatables
-        ->select('id, name, phone, email, cf1, cf2')
+        ->select('id, name, phone, email, cf1, cf2, address1,address2,city,state,postal_code,country,vat_id,additional_no,other_seller_id')
         ->from('customers')
         ->add_column('Actions', "<div class='text-center'><div class='btn-group'><a href='" . site_url('customers/edit/$1') . "' class='tip btn btn-warning btn-xs' title='" . $this->lang->line('edit_customer') . "'><i class='fa fa-edit'></i></a> <a href='" . site_url('customers/delete/$1') . "' onClick=\"return confirm('" . $this->lang->line('alert_x_customer') . "')\" class='tip btn btn-danger btn-xs' title='" . $this->lang->line('delete_customer') . "'><i class='fa fa-trash-o'></i></a></div></div>", 'id')
         ->unset_column('id');

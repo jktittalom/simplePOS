@@ -85,6 +85,26 @@
                             ?>
                             <?= form_dropdown('filter_option', $filter_option, $store->filter_option, 'class="form-control select2 tip" id="filter_option"  required="required" style="width:100%;"'); ?>
                         </div>
+                        <div class="form-group">
+                            <?= lang('customer_type', 'customer_type'); ?>
+                            <?php
+                            $filter_option = array();
+                            $filter_option[''] = lang("select")." ".lang("customer_type");
+                            $filter_option[1] = lang("B2c");
+                            $filter_option[2] = lang("B2b");
+                            ?>
+                            <?= form_dropdown('customer_type', $filter_option, $store->customer_type, 'class="form-control select2 tip" id="customer_type"  required="required" style="width:100%;"'); ?>
+                        </div>
+                        <div class="form-group">
+                            <?= lang('print_type', 'print_type'); ?>
+                            <?php
+                            $filter_option = array();
+                            $filter_option[''] = lang("select")." ".lang("print_type");
+                            $filter_option[1] = lang("a4");
+                            $filter_option[2] = lang("rolls");
+                            ?>
+                            <?= form_dropdown('print_type', $filter_option, $store->print_type, 'class="form-control select2 tip" id="print_type"  required="required" style="width:100%;"'); ?>
+                        </div>
 
                         <div class="form-group">
                             <label class="control-label" for="receipt_header"><?= $this->lang->line("receipt_header"); ?></label>

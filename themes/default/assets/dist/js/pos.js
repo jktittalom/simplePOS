@@ -177,15 +177,25 @@ function loadItems() {
         
         if (((order_tax = parseFloat(d)), -1 !== d.indexOf("%"))) {
             var p = d.split("%");
-            //order_tax = ((total - order_discount) * parseFloat(p[0])) / 100;
-            order_tax = ((final_total - order_discount) * parseFloat(p[0])) / 100;
+            console.log('final_total:'+final_total);
+            order_tax = ((total - order_discount) * parseFloat(p[0])) / 100;
+            // By Jiten
+            var finalTax = (parseFloat(p[0]) + 100)/100;
+            order_tax = total - ((total - order_discount)/finalTax) ;
+            /*// By Jiten
+            //order_tax = ((final_total - order_discount) * parseFloat(p[0])) / 100;
+            
+            console.log('finalTax:'+finalTax);
+            console.log('total:'+total);
+            order_tax = final_total - ((total - order_discount)/finalTax) ;*/
+            
 
         }
 
          console.log('Jiten: total value before :'+total+', -- order tax:'+order_tax);
 
-        var u = total - parseFloat(order_discount) + parseFloat(order_tax);
-
+        var u = total - parseFloat(order_discount);
+        total =  total - parseFloat(order_tax); // 
 
         if (
             ((grand_total = formatMoney(u)),

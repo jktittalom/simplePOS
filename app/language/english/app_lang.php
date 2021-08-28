@@ -686,5 +686,14 @@ $lang['filter_option']						  = 'Search Filters';
 $lang['category_only']						  = 'Category Only';
 $lang['barcode_only']						  = 'Barcode Only';
 $lang['both_category_barcode']				  = 'Both(Category & Barcode)';
+$lang['customer_type']                     	  = 'Customer Type';
+$lang['print_type']                     	  = 'Print Type';
+$lang['customer_name']                     	  = 'Customer Name';
+$lang['customer_no']                     	  = 'Customer Phone Number';
+$lang['location']                     		  = 'Location';
+$lang['additional_no']                     	  = 'Additional No.';
+$lang['other_seller_id']                      = 'Other Seller ID';
+
+
 
 

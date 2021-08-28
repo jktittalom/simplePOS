@@ -73,6 +73,8 @@ class Settings extends MY_Controller
         $this->form_validation->set_rules('vat', $this->lang->line('vat'), 'required');
         $this->form_validation->set_rules('vat_id', $this->lang->line('vat_id'), 'required');
         $this->form_validation->set_rules('filter_option', $this->lang->line('filter_option'), 'required');
+        $this->form_validation->set_rules('customer_type', $this->lang->line('customer_type'), 'required');
+        $this->form_validation->set_rules('print_type', $this->lang->line('print_type'), 'required');
         
 
         if ($this->form_validation->run() == true) {
@@ -91,6 +93,8 @@ class Settings extends MY_Controller
                 'filter_option'            => $this->input->post('filter_option'),
                 'receipt_header' => $this->input->post('receipt_header'),
                 'receipt_footer' => $this->input->post('receipt_footer'),
+                'customer_type' => $this->input->post('customer_type'),
+                'print_type' => $this->input->post('print_type'),
             ];
 
             if ($_FILES['userfile']['size'] > 0) {
@@ -361,6 +365,9 @@ class Settings extends MY_Controller
         $this->form_validation->set_rules('vat_id', $this->lang->line('vat_id'), 'required');
         $this->form_validation->set_rules('vat', $this->lang->line('vat'), 'required');
         $this->form_validation->set_rules('filter_option', $this->lang->line('filter_option'), 'required');
+         $this->form_validation->set_rules('customer_type', $this->lang->line('customer_type'), 'required');
+        $this->form_validation->set_rules('print_type', $this->lang->line('print_type'), 'required');
+
         
 
         if ($this->form_validation->run() == true) {
@@ -379,6 +386,8 @@ class Settings extends MY_Controller
                 'filter_option'  => $this->input->post('filter_option'),
                 'receipt_header' => $this->input->post('receipt_header'),
                 'receipt_footer' => $this->input->post('receipt_footer'),
+                'customer_type' => $this->input->post('customer_type'),
+                'print_type' => $this->input->post('print_type'),
             ];
 
             if ($_FILES['userfile']['size'] > 0) {

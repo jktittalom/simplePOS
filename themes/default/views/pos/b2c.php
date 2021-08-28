@@ -4,11 +4,15 @@
             <?php
             if ($store) {
                 echo '<p style="text-align:center;border-bottom:5px solid;">';
-                echo '<strong>' . $store->name . '</strong> ' .'فاتورة ضريبية'.'<br>';
-                echo '<strong>' . $store->name . '</strong> ' .lang('tax_invoice').'<br>';
+                if(!empty($store->logo)) {
+                    echo '<p><img src="'.base_url('uploads/' . $store->logo).'"/></p> ';
+                }
+                echo '<strong>' . $store->name . '</strong> ' .'<br>';
                 echo '</p>';
                // echo '<p>' . nl2br($store->receipt_header) . '</p>';
             }
+
+
             ?>
         </div>
         <table class="table table-striped table-condensed">
@@ -23,6 +27,18 @@
                 <td class="text-left" style="width: 20%; background:#fff;"><?=date('d-m-Y', strtotime($inv->date));?></td>
                 <td class="text-right" style="width: 24%; background:#fff;"><?=date('d-m-Y', strtotime($inv->date));?></td>
                 <td class="text-right" style="width: 30%; background:#fff;"><strong><?='إصدار تاريخ الفاتورة';?></strong></td>
+            </tr>
+             <tr>
+                <td class="text-left" style="width: 30%; background:#fff;"><strong><?=lang('customer_name');?></strong></td>
+                <td class="text-left" style="width: 20%; background:#fff;"><?=$customer->name;?></td>
+                <td class="text-right" style="width: 24%; background:#fff;"><?=$customer->name;?></td>
+                <td class="text-right" style="width: 30%; background:#fff;"><strong><?='اسم الزبون';?></strong></td>
+            </tr>
+            <tr>
+                <td class="text-left" style="width: 30%; background:#fff;"><strong><?=lang('customer_no');?></strong></td>
+                <td class="text-left" style="width: 20%; background:#fff;"><?=$customer->phone;?></td>
+                <td class="text-right" style="width: 24%; background:#fff;"><?=$customer->phone;?></td>
+                <td class="text-right" style="width: 30%; background:#fff;"><strong><?='رقم هاتف العميل';?></strong></td>
             </tr>
         </table>
         <div style="clear:both; height: 50px;"></div>
@@ -65,22 +81,33 @@
                 <tr>
                     <td><?=lang('total_vat');?></td>
                     <td colspan="2" style="text-align: right;"><?='إجمالي ضريبة القيمة المضافة';?></td>
-                    <td style="text-align: right;"><?=$this->tec->formatMoney($inv->order_tax);?></td>
+                    <td style="text-align: right;"><?=$this->tec->formatMoney($inv->total_tax);?></td>
                 </tr>
                 <tr>
                     <td style="border-bottom:1px solid #000;"><?=lang('total_amount_paid');?></td>
                     <td colspan="2" style="text-align: right;border-bottom:1px solid #000;"><?='المبلغ الإجمالي المدفوع';?></td>
-                    <td style="text-align: right;border-bottom:1px solid #000;"><?= $this->tec->formatMoney($inv->total+$inv->order_tax); ?></td>
+                    <td style="text-align: right;border-bottom:1px solid #000;"><?= $this->tec->formatMoney($inv->total+$inv->total_tax); ?></td>
                 </tr>
 
             </tfoot>
         </table>
         <div style="width: 100%; text-align: center;">
+            <p>
+                <span><?=lang('location');?>: <?=$store->address1.', '.$store->address2.', '.$store->city.' - '.$store->postal_code.', '.$store->state.', '.$store->country;?></span><br>
+                <span><?=lang('phone');?>: <?=$store->phone;?></span><br>
+                <span><?=lang('vat_id');?>: <?=$store->vat_id;?></span><br>
+                <?php if (!empty($inv->note)) { ?>
+                <span><?=lang('note');?>: <?=nl2br($inv->note);?></span><br>
+                <?php } ?>
+                <?php if (!empty($payments[0]->note)) { ?>
+                <span><?=lang('payment_note');?>: <?=nl2br($payments[0]->note);?></span><br>
+                 <?php } ?>
+            </p>
             <?php
 
-                $barcode_content = lang('company_name').': '.$store->name.', '.lang('vat_no').': '.$store->vat_id. ', '.lang('timestamp').': '.date('d-m-Y H:i:s a', strtotime($inv->date)).', '.lang('total_vat').': '.$this->tec->formatMoney($inv->order_tax).', '.lang('total_amount_paid').': '.$this->tec->formatMoney($inv->total);
+                $QRcode_content = lang('company_name').': '.$store->name.', '.lang('vat_no').': '.$store->vat_id. ', '.lang('timestamp').': '.date('d-m-Y H:i:s a', strtotime($inv->date)).', '.lang('total_vat').': '.$this->tec->formatMoney($inv->total_tax).', '.lang('total_amount_paid').': '.$this->tec->formatMoney($inv->total);
 
-                $params['data'] = $barcode_content;
+                $params['data'] = $QRcode_content;
                 echo $this->ciqrcode->generate($params);
             ?>
         </div>
