@@ -111,6 +111,34 @@ class Pos_model extends CI_Model
         return false;
     }
 
+
+    public function fetch_products_Jiten($category_id, $limit, $start)
+    {
+        // By DevRiver: 01 Sep 2021, Getting all active product
+        $active = 1;
+        $store_id = $this->session->userdata('store_id');
+
+        $this->db->select("products.*");
+        $this->db->limit($limit, $start);
+        if ($category_id) {
+            $this->db->where('category_id', $category_id);
+        }
+        $this->db->where('active', $active);
+        $this->db->join('product_store_qty', "product_store_qty.product_id = products.id and display=1 and store_id = {$store_id} ", 'inner');
+        $this->db->group_by('products.id');
+
+        $this->db->order_by('code', 'asc');
+        $query = $this->db->get('products');
+
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+    }
+
     public function getAllSaleItems($sale_id)
     {
         $j = "(SELECT id, code, name, tax_method from {$this->db->dbprefix('products')}) P";
@@ -204,10 +232,16 @@ class Pos_model extends CI_Model
     // by Jiten, 18 Aug 2021, We need to use global setting default Vat for each product
     public function getProductByCode_Jiten($code, $default_vat=0.00)
     {
-        $jpsq = "( SELECT product_id, quantity, price from {$this->db->dbprefix('product_store_qty')} WHERE store_id = {$this->session->userdata('store_id')} ) AS PSQ";
+        // By DevRiver: 01 Sep 2021, Getting all active product
+        $active = 1;
+        $store_id = $this->session->userdata('store_id');
+        $display = 1;
+        
+        $jpsq = "( SELECT product_id, quantity, price from {$this->db->dbprefix('product_store_qty')} WHERE store_id = {$store_id} and display={$display}) AS PSQ";
         $this->db->select("{$this->db->dbprefix('products')}.*, COALESCE(PSQ.quantity, 0) as quantity, COALESCE(PSQ.price, {$this->db->dbprefix('products')}.price) as store_price", false)
-        ->join($jpsq, 'PSQ.product_id=products.id', 'left');
-        $q = $this->db->get_where('products', ['code' => $code], 1);
+        ->join($jpsq, "PSQ.product_id=products.id", 'inner');
+
+        $q = $this->db->get_where('products', ['code' => $code, 'active' => $active], 1);
         if ($q->num_rows() > 0) {
             $obj = $q->row();
             $obj->tax = $default_vat;  // tax percent
@@ -248,16 +282,20 @@ class Pos_model extends CI_Model
     // by Jiten, 18 Aug 2021, We need to use global setting default Vat for each product
     public function getProductNames_Jiten($term, $limit = 10, $strict = false, $default_vat=0.00)
     {
+        // By DevRiver: 01 Sep 2021, Getting all active product
+        $active = 1;
         $store_id = $this->session->userdata('store_id');
+        $display = 1; // need to show product when that product is display enabled, 01 Sep 2021
+
         $this->db->select("{$this->db->dbprefix('products')}.*, COALESCE(psq.quantity, 0) as quantity, COALESCE(psq.price, 0) as store_price")
-        ->join("( SELECT * from {$this->db->dbprefix('product_store_qty')} WHERE store_id = {$store_id}) psq", 'products.id=psq.product_id', 'left');
+        ->join("( SELECT * from {$this->db->dbprefix('product_store_qty')} WHERE store_id = {$store_id} and display={$display}) psq", 'products.id=psq.product_id', 'inner');
         if ($strict) {
             $this->db->where('code', $term);
         } else {
             if ($this->db->dbdriver == 'sqlite3') {
-                $this->db->where("(name LIKE '%{$term}%' OR code LIKE '%{$term}%' OR  (name || ' (' || code || ')') LIKE '%{$term}%')");
+                $this->db->where("(name LIKE '%{$term}%' OR code LIKE '%{$term}%' OR  (name || ' (' || code || ')') LIKE '%{$term}%') and active = {$active}");
             } else {
-                $this->db->where("(name LIKE '%{$term}%' OR code LIKE '%{$term}%' OR  concat(name, ' (', code, ')') LIKE '%{$term}%')");
+                $this->db->where("(name LIKE '%{$term}%' OR code LIKE '%{$term}%' OR  concat(name, ' (', code, ')') LIKE '%{$term}%') and active = {$active}");
             }
         }
         $this->db->group_by('products.id')->limit($limit);
@@ -795,6 +833,18 @@ class Pos_model extends CI_Model
             return true;
         }
 
+        return false;
+    }
+
+    public function getStoreMaxInvoiceID($store_id)
+    {
+        $this->db->select('MAX(store_invoice_id) as max_invoice_id')
+            ->where('sales.store_id', $store_id);
+        $q = $this->db->get('sales');
+
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
         return false;
     }
 }

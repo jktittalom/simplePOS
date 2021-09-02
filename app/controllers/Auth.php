@@ -124,7 +124,7 @@ class Auth extends MY_Controller
 
         $this->data['title'] = lang('add_user');
         $this->form_validation->set_rules('username', lang('username'), 'trim|is_unique[users.username]');
-        $this->form_validation->set_rules('email', lang('email'), 'trim|is_unique[users.email]');
+        //$this->form_validation->set_rules('email', lang('email'), 'trim|is_unique[users.email]');
 
         if ($this->form_validation->run() == true) {
             $username = strtolower($this->input->post('username'));
@@ -229,9 +229,10 @@ class Auth extends MY_Controller
         if ($user->username != $this->input->post('username')) {
             $this->form_validation->set_rules('username', lang('username'), 'trim|is_unique[users.username]');
         }
-        if ($user->email != $this->input->post('email')) {
+
+/*        if ($user->email != $this->input->post('email')) {
             $this->form_validation->set_rules('email', lang('email'), 'trim|is_unique[users.email]');
-        }
+        }*/
 
         if ($this->form_validation->run() === true) {
             if (DEMO) {
@@ -251,7 +252,7 @@ class Auth extends MY_Controller
                         'first_name' => $this->input->post('first_name'),
                         'last_name'  => $this->input->post('last_name'),
                         'username'   => $this->input->post('username'),
-                        'email'      => $this->input->post('email'),
+                       // 'email'      => $this->input->post('email'),
                         'phone'      => $this->input->post('phone'),
                         'gender'     => $this->input->post('gender'),
                         'active'     => $this->input->post('status'),

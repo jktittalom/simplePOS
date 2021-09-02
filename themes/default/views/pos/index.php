@@ -401,7 +401,7 @@
                                                         <td width="25%"><a href="#" id="add_discount"><?=lang('discount')?></a></td>
                                                         <td class="text-right" style="padding-right:10px;"><span id="ds_con">0</span></td>
                                                         <!-- <td width="25%"><a href="#" id="add_tax"><?=lang('vat')?></a></td> -->
-                                                        <td width="25%"><?=lang('vat')?></td>
+                                                        <td width="25%"><?=lang('vat')?>(<?= $store->vat ?>)</td>
                                                         <td class="text-right"><span id="ts_con">0</span></td>
                                                     </tr>
                                                     <tr class="success">
@@ -480,7 +480,7 @@
                             <div class="contents" id="right-col">
                                 <?php if($store->filter_option == 1 ||  $store->filter_option == 0) { ?>
                                 <div id="category-list">
-                                    <ul class="control-sidebar-menu">
+                        <ul class="control-sidebar-menu" style="display:flex;" >
                                         <?php
                                             foreach ($categories as $category) {
                                                 echo '<li><a href="#" class="category' . ($category->id == $Settings->default_category ? ' active' : '') . '" id="' . $category->id . '">';
@@ -846,26 +846,18 @@
                                 <div class="form-group">
                                     <?= lang('customer_type', 'Customer Type'); ?>
                                     <select id="printpage" class="form-control paid_by select2" style="width:100%;">
-                                        <?php if($store->customer_type == 1) { ?>
-                                        <option value="b2c" selected="selected"><?= lang('B2c'); ?></option>
-                                        <?php } ?>
-                                        <?php if($store->customer_type == 2) { ?>
-                                        <option value="b2b" selected="selected"><?= lang('B2b'); ?></option>
-                                        <?php } ?>
-                                   
+                                        <option value="b2c" <?php if($store->customer_type == 1) { ?> selected="selected" <?php } ?> > <?= lang('B2c'); ?></option>
+                                        <option value="b2b" <?php if($store->customer_type == 2) { ?> selected="selected"  <?php } ?> ><?= lang('B2b'); ?></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-group">
                                     <?= lang('print_type', 'Print Type'); ?>
-                                    <select id="printer" class="form-control paid_by select2" style="width:100%;">
-                                        <?php if($store->print_type == 1) { ?>
-                                        <option value="1" selected="selected"><?= lang('a4'); ?></option>
-                                        <?php } ?>
-                                        <?php if($store->print_type == 2) { ?>
-                                        <option value="2" selected="selected"><?= lang('rolls'); ?></option>
-                                        <?php } ?>
+                                    <select id="printer" class="form-control paid_by" style="width:100%;">
+                                        <option value="1" <?php if($store->print_type == 1) { ?> selected="selected" <?php } ?> ><?= lang('a4'); ?></option>
+                                        <option value="2" <?php if($store->print_type == 2) { ?> selected="selected" <?php } ?> <?php if($store->customer_type == 2) { ?> style="display: none;"<?php } ?>><?= lang('rolls'); ?></option>
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -1234,7 +1226,12 @@
     lang['merchant_copy'] = '<?= lang('merchant_copy'); ?>';
 
     $(document).ready(function() {
-        console.log("Welcome Jite");
+       
+
+        console.log('customer type default: '+$('#printpage :selected').val());
+        
+        if (get('spos_tax')) { remove('spos_tax'); }
+        
         <?php if ($this->session->userdata('rmspos')) { ?>
 
             if (get('spositems')) { remove('spositems'); }
@@ -1244,6 +1241,8 @@
             if (get('spos_customer')) { remove('spos_customer'); }
             if (get('amount')) { remove('amount'); }
             <?php $this->tec->unset_data('rmspos'); } ?>
+            
+            if (get('spos_tax')) { remove('spos_tax'); }
 
             if (get('rmspos')) {
                 if (get('spositems')) { remove('spositems'); }

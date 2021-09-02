@@ -72,6 +72,13 @@
                                     <?= lang('image', 'image'); ?>
                                     <input type="file" name="userfile" id="image">
                                 </div>
+                                <div class="form-group">
+                                    <?= lang('status', 'status'); ?>
+                                    <?php
+                                    $opt = array('' => '', 1 => lang('active'), 0 => lang('inactive'));
+                                    echo form_dropdown('status', $opt, (isset($_POST['status']) ? $_POST['status'] : ''), 'id="status" data-placeholder="' . lang("select") . ' ' . lang("status") . '" class="form-control input-tip select2" style="width:100%;"');
+                                    ?>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div id="ct" style="display:none;">
@@ -105,9 +112,16 @@
                                             <?= lang('quantity', 'quantity'.$store->id); ?>
                                             <?= form_input('quantity'.$store->id, set_value('quantity', 0), 'class="form-control tip" id="quantity'.$store->id.'"'); ?>
                                         </div>
-                                        <div class="form-group" style="margin-bottom:0;">
+                                        <div class="form-group">
                                             <?= lang('price', 'price'.$store->id); ?>
                                             <?= form_input('price'.$store->id, set_value('price'.$store->id), 'class="form-control tip" id="price'.$store->id.'" placeholder="'.lang('optional').'"'); ?>
+                                        </div>
+                                        <div class="form-group" style="margin-bottom:0;">
+                                            <?= lang('display', 'display'); ?>
+                                            <?php
+                                            $opt = array('' => '', 1 => lang('yes'), 0 => lang('no'));
+                                            echo form_dropdown('display'.$store->id, $opt, (isset($_POST['display'.$store->id]) ? $_POST['display'.$store->id] : ''), 'id="display"'.$store->id.' data-placeholder="' . lang("select") . ' ' . lang("display") . '" class="form-control input-tip select2" style="width:100%;"');
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -116,6 +130,12 @@
                                     <div class="form-group">
                                         <?= lang('quantity', 'quantity'); ?>
                                         <?= form_input('quantity', set_value('quantity', 0), 'class="form-control tip" id="quantity" required="required"'); ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <?php
+                                            $opt = array('' => '', 1 => lang('yes'), 0 => lang('no'));
+                                            echo form_dropdown('display', $opt, (isset($_POST['display']) ? $_POST['display'] : ''), 'id="display" data-placeholder="' . lang("select") . ' ' . lang("display") . '" class="form-control input-tip select2" style="width:100%;"');
+                                            ?>
                                     </div>
                                 </div>
                                 <?php } ?>

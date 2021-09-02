@@ -35,8 +35,12 @@ class Pos extends MY_Controller
         } else {
             $tcp = false;
         }
+        
 
-        $products = $this->pos_model->fetch_products($category_id, $this->Settings->pro_limit, $page);
+        //default: // $products = $this->pos_model->fetch_products($category_id, $this->Settings->pro_limit, $page);
+       
+       // die(":$store_id:");
+        $products = $this->pos_model->fetch_products_Jiten($category_id, $this->Settings->pro_limit, $page);
         $pro      = 1;
         $prods    = '<div>';
         if ($products) {
@@ -297,6 +301,8 @@ class Pos extends MY_Controller
 
         $this->form_validation->set_rules('customer', lang('customer'), 'trim|required');
 
+
+
         if ($this->form_validation->run() == true) {
             $quantity  = 'quantity';
             $product   = 'product';
@@ -443,9 +449,6 @@ class Pos extends MY_Controller
                     $total += $this->tec->formatDecimal(($item_net_price * $item_quantity), 4);
                 }
             }
-           // echo '<pre>';
-           // print_r($products); die;
-
             if (empty($products)) {
                 $this->form_validation->set_rules('product', lang('order_items'), 'required');
             } else {
@@ -483,8 +486,6 @@ class Pos extends MY_Controller
             // by Jiten: For report, as there are only 1 TAX which is VAT on product only
             $order_tax = 0.00;
             $order_tax_id = '';
-            ////
-
             $total_tax   = $this->tec->formatDecimal(($product_tax + $order_tax), 4);
             $grand_total = $this->tec->formatDecimal(($total + $total_tax - $order_discount), 4);
             $paid        = $this->input->post('amount') ? $this->input->post('amount') : 0;
@@ -502,6 +503,8 @@ class Pos extends MY_Controller
                     $status = 'partial';
                 }
             }
+            // getting store max invoice id, Jiten: 30 Aug 2021
+            $inv_resp = $this->pos_model->getStoreMaxInvoiceID($this->session->userdata('store_id'));
 
             $data = ['date'         => $date,
                 'customer_id'       => $customer_id,
@@ -528,6 +531,8 @@ class Pos extends MY_Controller
 
             if (!$eid) {
                 $data['store_id'] = $this->session->userdata('store_id');
+                $data['store_name'] = $storeInfo->name;
+                $data['store_invoice_id'] = $inv_resp->max_invoice_id+1;
             }
 
             if (!$eid && !$suspend && $paid) {
@@ -561,8 +566,8 @@ class Pos extends MY_Controller
 
                     //'print'     => $this->input->post('printpage') == '' ? 'b2c' : $this->input->post('printpage'), // By Jiten 18 Aug 2021, Default B2C
                     //'printer'     => $this->input->post('printer') == '' ? 3 : $this->input->post('printer'), // By Jiten 18 Aug 2021, default Both
-                    'print'       => $storeInfo->customer_type == '1' ? 'b2c' : 'b2b',
-                    'printer'     => $storeInfo->print_type  , // By Jiten 27 Aug 2021, as per client now we will set these setting per store wise
+                    'print'       => $this->input->post('printpage') == '' ? $storeInfo->customer_type == '1' ? 'b2c' : 'b2b' : $this->input->post('printpage'),
+                    'printer'     => $this->input->post('printer') == '' ? $storeInfo->print_type :  $this->input->post('printer') , // By Jiten 27 Aug 2021, as per client now we will set these setting per store wise
                     
                 ];
                 $data['paid'] = $amount;

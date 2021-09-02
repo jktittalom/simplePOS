@@ -141,7 +141,7 @@ class Reports extends MY_Controller
 
         $this->load->library('datatables');
         $this->datatables
-        ->select("id, date, customer_name, total, total_tax, total_discount, grand_total, paid, (grand_total-paid) as balance, status")
+        ->select("id, date, store_invoice_id, store_name, customer_name, total, total_tax, total_discount, grand_total, paid, (grand_total-paid) as balance, status")
         ->from('sales');
         if ($this->session->userdata('store_id')) {
             $this->datatables->where('store_id', $this->session->userdata('store_id'));

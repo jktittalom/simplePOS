@@ -21,6 +21,15 @@
             { "data": "name" },
             { "data": "phone" },
             { "data": "email" },
+            { "data": "address1" },
+            { "data": "address2" },
+            { "data": "city" },
+            { "data": "state" },
+            { "data": "postal_code" },
+            { "data": "country" },
+            { "data": "vat_id" },
+            { "data": "additional_no" },
+            { "data": "other_seller_id" },
             { "data": "cf1" },
             { "data": "cf2" },
             { "data": "Actions", "searchable": false, "orderable": false }
@@ -54,6 +63,15 @@
                                     <th><?= lang("name"); ?></th>
                                     <th><?= lang("phone"); ?></th>
                                     <th><?= lang("email_address"); ?></th>
+                                    <th><?= lang("address1"); ?></th>
+                                    <th><?= lang("address2"); ?></th>
+                                    <th><?= lang("city"); ?></th>
+                                    <th><?= lang("state"); ?></th>
+                                    <th><?= lang("postal_code"); ?></th>
+                                    <th><?= lang("country"); ?></th>
+                                    <th><?= lang("vat_id"); ?></th>
+                                    <th><?= lang("additional_no"); ?></th>
+                                    <th><?= lang("other_seller_id"); ?></th>
                                     <th><?= lang("ccf1"); ?></th>
                                     <th><?= lang("ccf2"); ?></th>
                                     <th style="width:65px;"><?= lang("actions"); ?></th>

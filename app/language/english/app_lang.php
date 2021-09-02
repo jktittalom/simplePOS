@@ -693,6 +693,13 @@ $lang['customer_no']                     	  = 'Customer Phone Number';
 $lang['location']                     		  = 'Location';
 $lang['additional_no']                     	  = 'Additional No.';
 $lang['other_seller_id']                      = 'Other Seller ID';
+$lang['company_name']                     	  = 'Company Name';
+$lang['timestamp']                     		  = 'Timestamp';
+$lang['store_invoice_id']                     = 'Store Invoice ID';
+$lang['global_invoice_id']                    = 'Global Invoice ID';
+$lang['pos_paid_amount']                      = 'POS Paid Amount';
+$lang['pos_balance_amount']                   = 'POS Balance Amount';
+$lang['display']                     		  = 'Display';
 
 
 

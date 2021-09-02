@@ -18,8 +18,8 @@
         <table class="table table-striped table-condensed">
             <tr>
                 <td class="text-left" style="width: 30%; background:#fff;"><strong><?=lang('invoice_number');?></strong></td>
-                <td class="text-left" style="width: 20%; background:#fff;"><?=$inv->id;?></td>
-                <td class="text-right" style="width: 24%; background:#fff;"><?=$inv->id;?></td>
+                <td class="text-left" style="width: 20%; background:#fff;"><?=$inv->store_invoice_id;?></td>
+                <td class="text-right" style="width: 24%; background:#fff;"><?=$inv->store_invoice_id;?></td>
                 <td class="text-right" style="width: 30%; background:#fff;"><strong><?='رقم الفاتورة';?></strong></td>
             </tr>
             <tr>
@@ -79,7 +79,7 @@
                     <td style="text-align: right;border-top:1px solid #000"><?=$this->tec->formatMoney($taxable_amount);?></td>
                 </tr>
                 <tr>
-                    <td><?=lang('total_vat');?></td>
+                    <td><?=lang('total_vat');?>(<?=$store->vat?>)</td>
                     <td colspan="2" style="text-align: right;"><?='إجمالي ضريبة القيمة المضافة';?></td>
                     <td style="text-align: right;"><?=$this->tec->formatMoney($inv->total_tax);?></td>
                 </tr>
@@ -88,6 +88,22 @@
                     <td colspan="2" style="text-align: right;border-bottom:1px solid #000;"><?='المبلغ الإجمالي المدفوع';?></td>
                     <td style="text-align: right;border-bottom:1px solid #000;"><?= $this->tec->formatMoney($inv->total+$inv->total_tax); ?></td>
                 </tr>
+                <tr>
+                    <td style="border-bottom:1px solid #000;"><strong><?=lang('paid_by');?></strong></td>
+                    <td colspan="2" style="text-align: right;border-bottom:1px solid #000;"><strong><?='مدفوعة';?></strong></td>
+                    <td style="text-align: right;border-bottom:1px solid #000;"><strong><?= lang($payments[0]->paid_by); ?></strong></td>
+                </tr>
+                <tr>
+                    <td style="border-bottom:1px solid #000;"><strong><?=lang('pos_paid_amount');?></strong></td>
+                    <td colspan="2" style="text-align: right;border-bottom:1px solid #000;"><strong><?='المبلغ المدفوع في نقاط البيع';?></strong></td>
+                    <td style="text-align: right;border-bottom:1px solid #000;"><?= $this->tec->formatMoney($payments[0]->pos_paid); ?></td>
+                </tr>
+                <tr>
+                    <td style="border-bottom:1px solid #000;"><strong><?=lang('pos_balance_amount');?></strong></td>
+                    <td colspan="2" style="text-align: right;border-bottom:1px solid #000;"><strong><?='مبلغ رصيد نقاط البيع';?></strong></td>
+                    <td style="text-align: right;border-bottom:1px solid #000;"><?= $this->tec->formatMoney($payments[0]->pos_balance); ?></td>
+                </tr>
+
 
             </tfoot>
         </table>
@@ -105,7 +121,7 @@
             </p>
             <?php
 
-                $QRcode_content = lang('company_name').': '.$store->name.', '.lang('vat_no').': '.$store->vat_id. ', '.lang('timestamp').': '.date('d-m-Y H:i:s a', strtotime($inv->date)).', '.lang('total_vat').': '.$this->tec->formatMoney($inv->total_tax).', '.lang('total_amount_paid').': '.$this->tec->formatMoney($inv->total);
+                $QRcode_content = lang('company_name').': '.$store->name.', '.lang('vat_no').': '.$store->vat_id. ', '.lang('timestamp').': '.date('d-m-Y H:i:s a', strtotime($inv->date)).', '.lang('total_vat').': '.$this->tec->formatMoney($inv->total_tax).', '.lang('total_amount_paid').': '.$this->tec->formatMoney($inv->total+$inv->total_tax);
 
                 $params['data'] = $QRcode_content;
                 echo $this->ciqrcode->generate($params);

@@ -42,16 +42,18 @@ if ($this->input->post('end_date')) {
                 d.<?=$this->security->get_csrf_token_name();?> = "<?=$this->security->get_csrf_hash()?>";
             }},
             "buttons": [
-            { extend: 'copyHtml5', 'footer': true, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ] } },
-            { extend: 'excelHtml5', 'footer': true, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ] } },
-            { extend: 'csvHtml5', 'footer': true, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ] } },
+            { extend: 'copyHtml5', 'footer': true, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] } },
+            { extend: 'excelHtml5', 'footer': true, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] } },
+            { extend: 'csvHtml5', 'footer': true, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] } },
             { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'A4', 'footer': true,
-            exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ] } },
+            exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] } },
             { extend: 'colvis', text: 'Columns'},
             ],
             "columns": [
-            { "data": "id", "visible": false },
+            { "data": "id", "visible": true },
             { "data": "date", "render": hrld },
+            { "data": "store_name" },
+            { "data": "store_invoice_id" },
             { "data": "customer_name" },
             { "data": "total", "render": currencyFormat },
             { "data": "total_tax", "render": currencyFormat },
@@ -174,9 +176,11 @@ if ($this->input->post('end_date')) {
                                 <table id="SLRData" class="table table-striped table-bordered table-condensed table-hover">
                                     <thead>
                                         <tr class="active">
-                                            <th style="max-width:30px;"><?= lang("id"); ?></th>
+                                            <th style="max-width:30px;"><?= lang("global_invoice_id"); ?></th>
                                             <th class="col-sm-2"><?= lang("date"); ?></th>
-                                            <th class="col-sm-2"><?= lang("customer"); ?></th>
+                                            <th class="col-sm-1"><?= lang("store"); ?></th>
+                                            <th style="max-width:30px;"class="col-sm-1"><?= lang("store_invoice_id"); ?></th>
+                                            <th class="col-sm-1"><?= lang("customer"); ?></th>
                                             <th class="col-sm-1"><?= lang("total"); ?></th>
                                             <th class="col-sm-1"><?= lang("vat"); ?></th>
                                             <th class="col-sm-1"><?= lang("discount"); ?></th>
@@ -193,9 +197,11 @@ if ($this->input->post('end_date')) {
                                     </tbody>
                                     <tfoot>
                                         <tr class="active">
-                                            <th style="max-width:30px;"><input type="text" class="text_filter" placeholder="[<?= lang('id'); ?>]"></th>
+                                            <th style="max-width:30px;"><input type="text" class="text_filter" placeholder="[<?=lang('global_invoice_id');?>]"></th>
                                             <th class="col-sm-2"><span class="datepickercon"><input type="text" class="text_filter datepicker" placeholder="[<?= lang('date'); ?>]"></span></th>
-                                            <th class="col-sm-2"><input type="text" class="text_filter" placeholder="[<?= lang('customer'); ?>]"></th>
+                                            <th class="col-sm-1"><input type="text" class="text_filter" placeholder="[<?=lang('store');?>]"></th>
+                                            <th style="max-width:30px;" class="col-sm-1"><input type="text" class="text_filter" placeholder="[<?=lang('store_invoice_id');?>]"></th>
+                                            <th class="col-sm-1"><input type="text" class="text_filter" placeholder="[<?= lang('customer'); ?>]"></th>
                                             <th class="col-sm-1"><?= lang("total"); ?></th>
                                             <th class="col-sm-1"><?= lang("tax"); ?></th>
                                             <th class="col-sm-1"><?= lang("discount"); ?></th>
@@ -205,9 +211,10 @@ if ($this->input->post('end_date')) {
                                             <th class="col-sm-1">
                                                 <select class="select2 select_filter"><option value=""><?= lang("all"); ?></option><option value="paid"><?= lang("paid"); ?></option><option value="partial"><?= lang("partial"); ?></option><option value="due"><?= lang("due"); ?></option></select>
                                             </th>
+
                                         </tr>
                                         <tr>
-                                            <td colspan="10" class="p0"><input type="text" class="form-control b0" name="search_table" id="search_table" placeholder="<?= lang('type_hit_enter'); ?>" style="width:100%;"></td>
+                                            <td colspan="12" class="p0"><input type="text" class="form-control b0" name="search_table" id="search_table" placeholder="<?= lang('type_hit_enter'); ?>" style="width:100%;"></td>
                                         </tr>
                                     </tfoot>
                                 </table>

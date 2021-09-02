@@ -17,8 +17,8 @@
                     <table class="table table-striped table-condensed">
                         <tr>
                             <td class="text-left" style="width: 30%; background:#fff; border: 1px solid #ccc;"><strong><?=lang('invoice_number');?></strong></td>
-                            <td class="text-left" style="width: 20%; background:#fff; border: 1px solid #ccc;"><?=$inv->id;?></td>
-                            <td class="text-right" style="width: 24%; background:#fff; border: 1px solid #ccc;"><?=$inv->id;?></td>
+                            <td class="text-left" style="width: 20%; background:#fff; border: 1px solid #ccc;"><?=$inv->store_invoice_id;?></td>
+                            <td class="text-right" style="width: 24%; background:#fff; border: 1px solid #ccc;"><?=$inv->store_invoice_id;?></td>
                             <td class="text-right" style="width: 30%; background:#fff; border: 1px solid #ccc;"><strong><?='رقم الفاتورة';?></strong></td>
                         </tr>
                         <tr><td colspan="4"> </td></tr>
@@ -43,7 +43,7 @@
                     
                         <?php
 
-                            $barcode_content = lang('company_name').': '.$store->name.', '.lang('vat_no').': '.$store->vat_id. ', '.lang('timestamp').': '.date('d-m-Y H:i:s a', strtotime($inv->date)).', '.lang('total_vat').': '.$this->tec->formatMoney($inv->total_tax).', '.lang('total_amount_paid').': '.$this->tec->formatMoney($inv->total);
+                            $barcode_content = lang('company_name').': '.$store->name.', '.lang('vat_no').': '.$store->vat_id. ', '.lang('timestamp').': '.date('d-m-Y H:i:s a', strtotime($inv->date)).', '.lang('total_vat').': '.$this->tec->formatMoney($inv->total_tax).', '.lang('total_amount_paid').': '.$this->tec->formatMoney($inv->total+$inv->total_tax);
 
                             $params['data'] = $barcode_content;
                             echo $this->ciqrcode->generate($params);
@@ -56,16 +56,16 @@
                 <td style="background-color: #5f5c5c;">
                     <table style="width: 100%">
                         <tr>
-                            <td style="width: 50%; text-align: left;border: 1px solid #ccc; color:#fff;"><strong><?=lang('Seller');?>:</strong></td>
-                            <td style="width: 50%; text-align: right;border: 1px solid #ccc; color:#fff;"><strong>تاجر:</strong></td>
+                            <td style="width: 50%; text-align: left;border: 1px solid #ccc; color:#fff;padding: 5px;"><strong><?=lang('Seller');?>:</strong></td>
+                            <td style="width: 50%; text-align: right;border: 1px solid #ccc; color:#fff;padding: 5px;"><strong>تاجر:</strong></td>
                         </tr>
                     </table>
                 </td>
                 <td style="background-color: #5f5c5c;">
                     <table style="width: 100%">
                         <tr>
-                            <td style="width: 50%; text-align: left;border: 1px solid #ccc; color:#fff;"><strong><?=lang('Buyer');?>:</strong></td>
-                            <td style="width: 50%; text-align: right;border: 1px solid #ccc; color:#fff;"><strong>مشتر:</strong></td>
+                            <td style="width: 50%; text-align: left;border: 1px solid #ccc; color:#fff;padding: 5px;"><strong><?=lang('Buyer');?>:</strong></td>
+                            <td style="width: 50%; text-align: right;border: 1px solid #ccc; color:#fff;padding: 5px;"><strong>مشتر:</strong></td>
                         </tr>
                     </table>
                 </td>
@@ -77,62 +77,16 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Name');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$store->name;?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Name');?>:</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=$store->name;?></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">اسم:</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <table style="width: 100%">
-                        <tr>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Name');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$customer->name;?></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">اسم:</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <table style="width: 100%">
-                        <tr>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Building no.');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$store->address1;?></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">لا للبناء.</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">اسم:</td>
                                     </tr>
                                 </table>
                             </td>
@@ -145,8 +99,8 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Building no.');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->address1) ? $customer->address1 : '';?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Name');?>:</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=$customer->name;?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -154,7 +108,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">لا للبناء.</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">اسم:</td>
                                     </tr>
                                 </table>
                             </td>
@@ -169,16 +123,16 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Street Name');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$store->address2;?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Building no.');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=$store->address1;?></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">اسم الشارع:</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">لا للبناء.</td>
                                     </tr>
                                 </table>
                             </td>
@@ -191,8 +145,8 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Street Name');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->address2) ? $customer->address2 : '';?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Building no.');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=!empty($customer->address1) ? $customer->address1 : '';?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -200,7 +154,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">اسم الشارع:</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">لا للبناء.</td>
                                     </tr>
                                 </table>
                             </td>
@@ -215,7 +169,53 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('District');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Street Name');?>:</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=$store->address2;?></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">اسم الشارع:</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Street Name');?>:</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=!empty($customer->address2) ? $customer->address2 : '';?></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">اسم الشارع:</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('District');?></td>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"></td>
                                     </tr>
                                 </table>
@@ -224,7 +224,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">يصرف</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">يصرف</td>
                                     </tr>
                                 </table>
                             </td>
@@ -237,7 +237,7 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('District');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('District');?></td>
                                         <td style="width: 50%; text-align: left;border: 1px solid #ccc;"></td>
                                     </tr>
                                 </table>
@@ -246,7 +246,7 @@
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">يصرف</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">يصرف</td>
                                     </tr>
                                 </table>
                             </td>
@@ -261,62 +261,16 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('City');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$store->city;?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('City');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=$store->city;?></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">مدينة</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <table style="width: 100%">
-                        <tr>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('City');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->city) ? $customer->city : '';?></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">مدينة</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <table style="width: 100%">
-                        <tr>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Country');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$store->country;?></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">دولة</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">مدينة</td>
                                     </tr>
                                 </table>
                             </td>
@@ -329,16 +283,16 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Country');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->country) ? $customer->country : '';?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('City');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=!empty($customer->city) ? $customer->city : '';?></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">دولة</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">مدينة</td>
                                     </tr>
                                 </table>
                             </td>
@@ -353,62 +307,16 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Postal Code');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$store->postal_code;?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Country');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=$store->country;?></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">رمز بريدي</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <table style="width: 100%">
-                        <tr>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Postal Code');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->postal_code) ? $customer->postal_code : '';?></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">رمز بريدي</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <table style="width: 100%">
-                        <tr>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Additional No.');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td style="width: 50%;">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">رقم إضافي</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">دولة</td>
                                     </tr>
                                 </table>
                             </td>
@@ -421,16 +329,16 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Additional No.');?></td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->additional_no) ? $customer->additional_no : '';?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Country');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=!empty($customer->country) ? $customer->country : '';?></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">رقم إضافي</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">دولة</td>
                                     </tr>
                                 </table>
                             </td>
@@ -445,16 +353,16 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('VAT Number');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$store->vat_id;?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Postal Code');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=$store->postal_code;?></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">ظريبه الشراء:</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">رمز بريدي</td>
                                     </tr>
                                 </table>
                             </td>
@@ -467,16 +375,16 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('VAT Number');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=!empty($customer->vat_id) ? $customer->vat_id : '' ;?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Postal Code');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=!empty($customer->postal_code) ? $customer->postal_code : '';?></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">ظريبه الشراء:</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">رمز بريدي</td>
                                     </tr>
                                 </table>
                             </td>
@@ -491,16 +399,16 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Other Seller ID');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Additional No.');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">معرف البائع الآخر:</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">رقم إضافي</td>
                                     </tr>
                                 </table>
                             </td>
@@ -513,16 +421,108 @@
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=lang('Other Seller ID');?>:</td>
-                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;"><?=$customer->other_seller_id;?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Additional No.');?></td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=!empty($customer->additional_no) ? $customer->additional_no : '';?></td>
                                     </tr>
                                 </table>
                             </td>
                             <td style="width: 50%;">
                                 <table style="width: 100%">
                                     <tr>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;"></td>
-                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;">معرف البائع الآخر:</td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">رقم إضافي</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('VAT Number');?>:</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=$store->vat_id;?></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">ظريبه الشراء:</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('VAT Number');?>:</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=!empty($customer->vat_id) ? $customer->vat_id : '' ;?></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">ظريبه الشراء:</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Other Seller ID');?>:</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">معرف البائع الآخر:</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=lang('Other Seller ID');?>:</td>
+                                        <td style="width: 50%; text-align: left;border: 1px solid #ccc;padding: 5px;"><?=$customer->other_seller_id;?></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 50%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;">معرف البائع الآخر:</td>
                                     </tr>
                                 </table>
                             </td>
@@ -540,14 +540,14 @@
 
         <table style="width: 100%">
             <tr>
-                <td style="width: 50%; text-align: left;border: 1px solid #ccc; color:#fff;background-color:#5f5c5c;font-weight: bold;"><?=lang('Line Items');?>:</td>
-                <td style="width: 50%; text-align: right;border: 1px solid #ccc; color:#fff;background-color:#5f5c5c;font-weight: bold;">البنود:</td>
+                <td style="width: 50%; text-align: left;border: 1px solid #ccc; color:#fff;background-color:#5f5c5c;font-weight: bold;padding: 5px;"><?=lang('Line Items');?>:</td>
+                <td style="width: 50%; text-align: right;border: 1px solid #ccc; color:#fff;background-color:#5f5c5c;font-weight: bold;padding: 5px;">البنود:</td>
             </tr>
             <tr>
                 <td style="width: 50%; text-align: center;color:#fff;background-color:#5f5c5c; font-weight: bold;">
                     <table style="width: 100%">
                         <tr>
-                            <td style="width: 25%;border-right: 1px solid; border-color: #ccc; ">
+                            <td style="width: 25%;border-right: 1px solid; border-color: #ccc; height: 100px;">
                                 <?=lang('nature_of_goods_or_service');?> <br> <?= 'طبيعة البضاعة والخدمة'; ?>
 
                             </td>
@@ -625,8 +625,8 @@
         </table>
         <table style="width: 100%">
             <tr>
-                <td style="width: 50%; text-align: left;border: 1px solid #ccc; color:#fff;background-color:#5f5c5c;font-weight: bold;"><?=lang('total_amounts');?>:</td>
-                <td style="width: 50%; text-align: right;border: 1px solid #ccc; color:#fff;background-color:#5f5c5c;font-weight: bold;">المبالغ الإجمالي:</td>
+                <td style="width: 50%; text-align: left;border: 1px solid #ccc; color:#fff;background-color:#5f5c5c;font-weight: bold;padding: 5px;"><?=lang('total_amounts');?>:</td>
+                <td style="width: 50%; text-align: right;border: 1px solid #ccc; color:#fff;background-color:#5f5c5c;font-weight: bold;padding: 5px;">المبالغ الإجمالي:</td>
             </tr>
             <tr>
                 <td colspan="2" style="width:100%">
@@ -635,34 +635,52 @@
                             <td>
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="width:30%;border: 1px solid #ccc;"></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;"><?=lang('total_excluding_vat')?></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;"><?=lang('الإجمالي (باستثناء ضريبة القيمة المضافة)')?></td>
-                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;"><?=$this->tec->formatMoney($total_taxable_amount_excluding);?></td>
+                                        <td style="width:30%;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;padding: 5px;"><?=lang('total_excluding_vat')?></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?=lang('الإجمالي (باستثناء ضريبة القيمة المضافة)')?></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?=$this->tec->formatMoney($total_taxable_amount_excluding);?></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%;border: 1px solid #ccc;"></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;"><?=lang('discount')?></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;"><?='خصم'?></td>
-                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;"><?=lang('')?></td>
+                                        <td style="width:30%;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;padding: 5px;"><?=lang('discount')?></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?='خصم'?></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?=lang('')?></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%;border: 1px solid #ccc;"></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;"><?=lang('total_taxable_amount')?></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;"><?='إجمالي المبلغ الخاضع للضريبة (باستثناء ضريبة القيمة المضافة)';?></td>
-                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;"><?=$this->tec->formatMoney($taxable_amount);?></td>
+                                        <td style="width:30%;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;padding: 5px;"><?=lang('total_taxable_amount')?></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?='إجمالي المبلغ الخاضع للضريبة (باستثناء ضريبة القيمة المضافة)';?></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?=$this->tec->formatMoney($taxable_amount);?></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%;border: 1px solid #ccc;"></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;"><?=lang('total_vat')?></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;"><?='إجمالي ضريبة القيمة المضافة';?></td>
-                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;"><?=$this->tec->formatMoney($inv->total_tax);?></td>
+                                        <td style="width:30%;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;padding: 5px;"><?=lang('total_vat')?>(<?=$store->vat?>)</td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?='إجمالي ضريبة القيمة المضافة';?></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?=$this->tec->formatMoney($inv->total_tax);?></td>
                                     </tr>
                                     <tr>
-                                        <td style="width:30%;border: 1px solid #ccc;"></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;"><?=lang('total_amount_paid')?></td>
-                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;"><?='المبلغ الإجمالي المدفوع';?></td>
-                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;"><?= $this->tec->formatMoney($inv->total+$inv->total_tax); ?></td>
+                                        <td style="width:30%;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;padding: 5px;"><?=lang('total_amount_paid')?></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?='المبلغ الإجمالي المدفوع';?></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?= $this->tec->formatMoney($inv->total+$inv->total_tax); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;padding: 5px;"><strong><?=lang('paid_by')?></strong></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;padding: 5px;"><strong><?='مدفوعة';?></strong></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;padding: 5px;"><strong><?= lang($payments[0]->paid_by); ?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;padding: 5px;"><strong><?=lang('pos_paid_amount')?></strong></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;padding: 5px;"><strong><?='المبلغ المدفوع في نقاط البيع';?></strong></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?= lang($payments[0]->pos_paid); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;border: 1px solid #ccc;padding: 5px;"></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: left;padding: 5px;"><strong><?=lang('pos_balance_amount')?></strong></td>
+                                        <td style="width:25%;border: 1px solid #ccc;text-align: right;padding: 5px;"><strong><?='مبلغ رصيد نقاط البيع';?></strong></td>
+                                        <td style="width:20%;border: 1px solid #ccc;text-align: right;padding: 5px;"><?= lang($payments[0]->pos_balance); ?></td>
                                     </tr>
                                 </table>
                             </td>
@@ -674,12 +692,12 @@
         <div style="clear:both; height: 30px;"></div>
         <table style="width: 100%">
             <tr>
-                <td style="width: 35%; text-align: left;border: 1px solid #ccc; font-weight: bold;"><?=lang('note');?>:</td>
-                <td style="width: 50%; text-align: right;border: 1px solid #ccc;"><?=nl2br($inv->note);?></td>
+                <td style="width: 35%; text-align: left;border: 1px solid #ccc; font-weight: bold;padding: 5px;"><?=lang('note');?>:</td>
+                <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"><?=nl2br($inv->note);?></td>
             </tr>
              <tr>
-                <td style="width: 35%; text-align: left;border: 1px solid #ccc;font-weight: bold;"><?=lang('payment_note');?>:</td>
-                <td style="width: 50%; text-align: right;border: 1px solid #ccc;"><?=nl2br($payments[0]->note);?></td>
+                <td style="width: 35%; text-align: left;border: 1px solid #ccc;font-weight: bold;padding: 5px;"><?=lang('payment_note');?>:</td>
+                <td style="width: 50%; text-align: right;border: 1px solid #ccc;padding: 5px;"><?=nl2br($payments[0]->note);?></td>
             </tr>
         </table>
 

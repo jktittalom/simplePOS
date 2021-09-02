@@ -31,7 +31,7 @@
             <p class="login-box-msg"><?= lang('login_to_your_account'); ?></p>
             <?= form_open("auth/login"); ?>
             <div class="form-group has-feedback">
-                <input type="text" name="identity" value="<?= set_value('identity', (DEMO ? 'admin@tecdiary.com' : '')); ?>" class="form-control" placeholder="<?= lang('email'); ?>" />
+                <input type="text" name="identity" value="<?= set_value('identity', (DEMO ? 'admin' : '')); ?>" class="form-control" placeholder="<?= lang('username'); ?>" />
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">

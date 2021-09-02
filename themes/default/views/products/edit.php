@@ -72,6 +72,12 @@
                                     <?= lang('image', 'image'); ?>
                                     <input type="file" name="userfile" id="image">
                                 </div>
+
+                                <div class="form-group">
+                                <?= lang('status', 'status'); ?>
+                                <?php $opt = array('' => '', 1 => lang('active'), 0 => lang('inactive')); ?>
+                                <?= form_dropdown('status', $opt, set_value('status', $product->active), 'class="form-control tip select2" id="status"  required="required" style="width:100%;"'); ?>
+                            </div>
                             </div>
                             <div class="col-md-6">
                                 <div id="ct" style="display:none;">
@@ -109,15 +115,21 @@
                                                 if ($sq->store_id == $store->id) {
                                                     $quantity = $sq->quantity;
                                                     $price = $sq->price > 0 ? $this->tec->formatDecimal($sq->price) : '';
+                                                    $display = $sq->display;
                                                 }
                                             }
                                             ?>
                                             <?= lang('quantity', 'quantity'.$store->id); ?>
                                             <?= form_input('quantity'.$store->id, set_value('quantity', $this->tec->formatDecimal($quantity)), 'class="form-control tip" id="quantity'.$store->id.'"'); ?>
                                         </div>
-                                        <div class="form-group" style="margin-bottom:0;">
+                                        <div class="form-group">
                                             <?= lang('price', 'price'.$store->id); ?>
                                             <?= form_input('price'.$store->id, set_value('price'.$store->id, $price), 'class="form-control tip" id="price'.$store->id.'" placeholder="'.lang('optional').'"'); ?>
+                                        </div>
+                                        <div class="form-group" style="margin-bottom:0;">
+                                            <?= lang('display', 'display'.$store->id); ?>
+                                            <?php $opt = array('' => '', 1 => lang('yes'), 0 => lang('no')); ?>
+                                            <?= form_dropdown('display'.$store->id, $opt, set_value('display'.$store->id, $display), 'class="form-control tip select2" id="display'.$store->id.'"  required="required" style="width:100%;"'); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -126,6 +138,11 @@
                                     <div class="form-group">
                                         <?= lang('quantity', 'quantity'); ?>
                                         <?= form_input('quantity', set_value('quantity', $this->tec->formatDecimal($stores_quantities->quantity)), 'class="form-control tip" id="quantity"'); ?>
+                                    </div>
+                                    <div class="form-group">
+                                         <?= lang('display', 'display'); ?>
+                                        <?php $opt = array('' => '', 1 => lang('yes'), 0 => lang('no')); ?>
+                                        <?= form_dropdown('display', $opt, set_value('display', $stores_quantities->display), 'class="form-control tip select2" id="display"  required="required" style="width:100%;"'); ?>
                                     </div>
                                 </div>
                                 <?php } ?>

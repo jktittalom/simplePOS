@@ -49,7 +49,7 @@ class Products_model extends CI_Model
 
     public function fetch_products($limit, $start = null, $category_id = null)
     {
-        $this->db->select('name, code, barcode_symbology, price')
+        $this->db->select('name, code, barcode_symbology, price, active')
         ->limit($limit, $start)->order_by('code', 'asc');
         if ($category_id) {
             $this->db->where('category_id', $category_id);
@@ -155,7 +155,7 @@ class Products_model extends CI_Model
     public function setStoreQuantity($data)
     {
         if ($this->getStoreQuantity($data['product_id'], $data['store_id'])) {
-            $this->db->update('product_store_qty', ['quantity' => $data['quantity'], 'price' => $data['price']], ['product_id' => $data['product_id'], 'store_id' => $data['store_id']]);
+            $this->db->update('product_store_qty', ['quantity' => $data['quantity'], 'price' => $data['price'], 'display' => $data['display']], ['product_id' => $data['product_id'], 'store_id' => $data['store_id']]);
         } else {
             $this->db->insert('product_store_qty', $data);
         }

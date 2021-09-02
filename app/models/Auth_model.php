@@ -1000,10 +1000,11 @@ class Auth_model extends CI_Model
 
         $manual_activation = $this->config->item('manual_activation', 'ion_auth');
 
-        if ($this->identity_column == 'email' && $this->email_check($email)) {
+        /*if ($this->identity_column == 'email' && $this->email_check($email)) {
             $this->set_error('account_creation_duplicate_email');
             return false;
-        } elseif ($this->identity_column == 'username' && $this->username_check($username)) {
+        } else*/
+        if ($this->identity_column == 'username' && $this->username_check($username)) {
             $this->set_error('account_creation_duplicate_username');
             return false;
         }

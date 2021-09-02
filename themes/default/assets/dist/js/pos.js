@@ -51,13 +51,13 @@ function loadItems() {
                     isNaN(g[0]) || (_ = formatDecimal(parseFloat((p * parseFloat(g[0])) / 100), 4));
                 }
                 (product_discount += formatDecimal(_ * r, 4)), (p = formatDecimal(p - _, 4));
-                console.log('Jiten: Item tax: '+t.row.tax);
-                console.log('Jiten: Item tax amount: '+t.row.product_tax);
+                /*console.log('Jiten: Item tax: '+t.row.tax);
+                console.log('Jiten: Item tax amount: '+t.row.product_tax);*/
                 var f = parseFloat(t.row.tax),
                     v = 0;/* p -= v = inclusiveTax(p, f) Jiten was default*/
                 null !== f && 0 != f && (0 == n ? ((p -= v = pt), (tax = lang.inclusive)) : ((v = exlusiveTax(p, f)), (tax = lang.exclusive))), (product_tax += formatDecimal(v * r, 4));
                 
-                console.log('Jiten: product_tax: '+product_tax);
+               /* console.log('Jiten: product_tax: '+product_tax);*/
                 var h = new Date().getTime(),
                     y = $('<tr id="' + h + '" class="' + e + '" data-item-id="' + e + '" data-id="' + t.row.id + '"></tr>');
                 (tr_html =
@@ -106,15 +106,15 @@ function loadItems() {
                     (tr_html += '<td class="text-center"><i class="fa fa-trash-o tip pointer posdel" id="' + h + '" title="Remove"></i></td>'),
                     y.html(tr_html),
                     y.prependTo("#posTable"),
-                    console.log('ppp:'+parseFloat(p));
+                    /*console.log('ppp:'+parseFloat(p));
                     console.log('taxppp:'+parseFloat(v));
-                    //(total += formatDecimal((parseFloat(p) + parseFloat(v)) * parseFloat(r), 4)),
+                    (total += formatDecimal((parseFloat(p) + parseFloat(v)) * parseFloat(r), 4)),*/
                     (total += formatDecimal((parseFloat(p) +  parseFloat(v)) * parseFloat(r), 4)),
                     (final_total += formatDecimal((parseFloat(p) + parseFloat(v) + parseFloat(v)) * parseFloat(r), 4)),
                     
                     (count += parseFloat(r)),
                     an++;
-                    console.log('taxppp total:'+parseFloat(total));
+                   /* console.log('taxppp total:'+parseFloat(total));*/
 
                 var b = $("#list-table-div")[0].scrollHeight;
                 $("#list-table-div").slimScroll({ scrollTo: b }),
@@ -171,15 +171,16 @@ function loadItems() {
         }
         var d = get("spos_tax") ? get("spos_tax") : $("#tax_val").val() ? $("#tax_val").val() : "0";
         
+       /*
         console.log('Jiten: spos_tax:'+get("spos_tax"));
         console.log('Jiten: tax_val:'+$("#tax_val").val());
-
+        */
         
         if (((order_tax = parseFloat(d)), -1 !== d.indexOf("%"))) {
             var p = d.split("%");
             console.log('final_total:'+final_total);
             order_tax = ((total - order_discount) * parseFloat(p[0])) / 100;
-            // By Jiten
+            // By DevRivers: 
             var finalTax = (parseFloat(p[0]) + 100)/100;
             order_tax = total - ((total - order_discount)/finalTax) ;
             /*// By Jiten
@@ -192,10 +193,10 @@ function loadItems() {
 
         }
 
-         console.log('Jiten: total value before :'+total+', -- order tax:'+order_tax);
+         /*console.log('Jiten: total value before :'+total+', -- order tax:'+order_tax);*/
 
         var u = total - parseFloat(order_discount);
-        total =  total - parseFloat(order_tax); // 
+        total =  total - parseFloat(order_tax); 
 
         if (
             ((grand_total = formatMoney(u)),
@@ -888,6 +889,13 @@ $(document).ready(function () {
             $("#payment_note_val").val($(this).val());
         }),
         $("#payModal").on("change", "#printpage", function (t) {
+            /* by DevRivers: 01 Sep 2021 Changing printer setting on the basis of customer type: */
+            if($(this).val() == 'b2c'){
+                $("#payModal").find('#printer').children('option[value="2"]').attr("style", "display:block");
+            }
+            if($(this).val() == 'b2b'){
+                $("#payModal").find('#printer').children('option[value="2"]').attr("style", "display:none;");
+            }
             $("#printpage").val($(this).val());
         }),
         $("#payModal").on("change", "#printer", function (t) {

@@ -46,16 +46,15 @@ if ($modal) {
                 <body>
                     <?php
     }
-
+    // DevRivers: CSS setting for printer output, 01 Sep 2021
     // default for  Rolls printer: 
     // for A4 printer 
     $printer_page_width = 'width: auto; max-width: 580px; min-width: 250px; margin: 0 auto;';
     if($payments[0]->print == 'b2b' || ($payments[0]->print == 'b2c' && $payments[0]->printer == 1)){
         $printer_page_width = "width: auto; max-width: 1024px; min-width: 768px; margin: 0 auto;";
     }
-
                 ?>
-                <div id="wrapper">
+                <div id="wrapper" style="<?=$printer_page_width?>">
                     <div id="receiptData" style="<?=$printer_page_width;?>">
                         <div class="no-print">
                             <?php if ($message) { ?>
@@ -66,16 +65,13 @@ if ($modal) {
                             <?php } ?>
                         </div>
                         <?php
-
-                            
+                        // DevRivers: Invoice print files      
                             if($payments[0]->print == 'b2b'){
                                 include 'b2b.php';
                             } else {
                                 include 'b2c.php';
                             }
 
-                            // include 'b2c.php';
-                            
                         ?>
 
                         <!-- start -->

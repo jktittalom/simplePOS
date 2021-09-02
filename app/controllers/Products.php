@@ -29,8 +29,11 @@ class Products extends MY_Controller
         if ($this->input->post('type') != 'service') {
             $this->form_validation->set_rules('cost', lang('product_cost'), 'required|is_numeric');
         }
+        
         // $this->form_validation->set_rules('product_tax', lang('product_tax'), 'required|is_numeric'); // By Jiten hide Tax, 18 Aug 2021 
         $this->form_validation->set_rules('alert_quantity', lang('alert_quantity'), 'is_numeric');
+        $this->form_validation->set_rules('status', lang('status'), 'required'); // By DevRivers add product Status, 01 Sep 2021 
+
 
         if ($this->form_validation->run() == true) {
             $data = [
@@ -45,6 +48,8 @@ class Products extends MY_Controller
                 'alert_quantity'    => $this->input->post('alert_quantity'),
                 'details'           => $this->input->post('details'),
                 'barcode_symbology' => $this->input->post('barcode_symbology'),
+                'active'            => $this->input->post('status'),
+
             ];
 
             if ($this->Settings->multi_store) {
@@ -54,6 +59,8 @@ class Products extends MY_Controller
                         'store_id' => $store->id,
                         'quantity' => $this->input->post('quantity' . $store->id),
                         'price'    => $this->input->post('price' . $store->id),
+                        'display'    => $this->input->post('display' . $store->id),
+
                     ];
                 }
             } else {
@@ -61,6 +68,7 @@ class Products extends MY_Controller
                     'store_id' => 1,
                     'quantity' => $this->input->post('quantity'),
                     'price'    => $this->input->post('price'),
+                    'display'    => $this->input->post('display'),
                 ];
             }
 
@@ -185,6 +193,7 @@ class Products extends MY_Controller
         $this->form_validation->set_rules('cost', lang('product_cost'), 'required|is_numeric');
         //$this->form_validation->set_rules('product_tax', lang('product_tax'), 'required|is_numeric'); // By Jiten hide Tax, 18 Aug 2021 
         $this->form_validation->set_rules('alert_quantity', lang('alert_quantity'), 'is_numeric');
+        $this->form_validation->set_rules('status', lang('status'), 'required'); // By DevRivers add product Status, 01 Sep 2021 
 
         if ($this->form_validation->run() == true) {
             $data = [
@@ -199,6 +208,8 @@ class Products extends MY_Controller
                 'alert_quantity'    => $this->input->post('alert_quantity'),
                 'details'           => $this->input->post('details'),
                 'barcode_symbology' => $this->input->post('barcode_symbology'),
+                'active' => $this->input->post('status'),
+
             ];
 
             if ($this->Settings->multi_store) {
@@ -208,6 +219,7 @@ class Products extends MY_Controller
                         'store_id' => $store->id,
                         'quantity' => $this->input->post('quantity' . $store->id),
                         'price'    => $this->input->post('price' . $store->id),
+                        'display'    => $this->input->post('display' . $store->id),
                     ];
                 }
             } else {
@@ -215,6 +227,8 @@ class Products extends MY_Controller
                     'store_id' => 1,
                     'quantity' => $this->input->post('quantity'),
                     'price'    => $this->input->post('price'),
+                    'display'    => $this->input->post('display'),
+
                 ];
             }
 
@@ -308,9 +322,9 @@ class Products extends MY_Controller
     {
         $this->load->library('datatables');
         if ($this->Admin) {
-            $this->datatables->select($this->db->dbprefix('products') . '.id as pid, ' . $this->db->dbprefix('products') . '.image as image, ' . $this->db->dbprefix('products') . '.code as code, ' . $this->db->dbprefix('products') . '.name as pname, type, ' . $this->db->dbprefix('categories') . ".name as cname, psq.quantity, tax, tax_method, cost, (CASE WHEN psq.price > 0 THEN psq.price ELSE {$this->db->dbprefix('products')}.price END) as price, barcode_symbology", false);
+            $this->datatables->select($this->db->dbprefix('products') . '.id as pid, ' . $this->db->dbprefix('products') . '.image as image, ' . $this->db->dbprefix('products') . '.code as code, ' . $this->db->dbprefix('products') . '.name as pname, type, ' . $this->db->dbprefix('categories') . ".name as cname, psq.quantity, tax, tax_method, cost, active, (CASE WHEN psq.price > 0 THEN psq.price ELSE {$this->db->dbprefix('products')}.price END) as price, barcode_symbology", false);
         } else {
-            $this->datatables->select($this->db->dbprefix('products') . '.id as pid, ' . $this->db->dbprefix('products') . '.image as image, ' . $this->db->dbprefix('products') . '.code as code, ' . $this->db->dbprefix('products') . '.name as pname, type, ' . $this->db->dbprefix('categories') . ".name as cname, psq.quantity, tax, tax_method, (CASE WHEN psq.price > 0 THEN psq.price ELSE {$this->db->dbprefix('products')}.price END) as price, barcode_symbology", false);
+            $this->datatables->select($this->db->dbprefix('products') . '.id as pid, ' . $this->db->dbprefix('products') . '.image as image, ' . $this->db->dbprefix('products') . '.code as code, ' . $this->db->dbprefix('products') . '.name as pname, type, ' . $this->db->dbprefix('categories') . ".name as cname, psq.quantity, tax, active, tax_method, (CASE WHEN psq.price > 0 THEN psq.price ELSE {$this->db->dbprefix('products')}.price END) as price, barcode_symbology", false);
         }
 
         $this->datatables->from('products')

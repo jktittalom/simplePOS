@@ -15,6 +15,16 @@
             }
         }
 
+        function pstatus(x){
+            if (x == '1') {
+                return '<span class="label label-success"><?= lang('active'); ?></span>';
+            } else if (x == '0') {
+                return '<span class="label label-danger"><?= lang('inactive'); ?></span>';
+            } else {
+                return x;
+            }
+        }
+
         function image(n) {
             if (n !== null) {
                 return '<div style="width:32px; margin: 0 auto;"><a href="<?=base_url();?>uploads/'+n+'" class="open-image"><img src="<?=base_url();?>uploads/thumbs/'+n+'" alt="" class="img-responsive"></a></div>';
@@ -33,11 +43,11 @@
                 d.<?=$this->security->get_csrf_token_name();?> = "<?=$this->security->get_csrf_hash()?>";
             }},
             "buttons": [
-            { extend: 'copyHtml5', 'footer': false, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] } },
-            { extend: 'excelHtml5', 'footer': false, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] } },
-            { extend: 'csvHtml5', 'footer': false, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] } },
+            { extend: 'copyHtml5', 'footer': false, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] } },
+            { extend: 'excelHtml5', 'footer': false, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] } },
+            { extend: 'csvHtml5', 'footer': false, exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] } },
             { extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'A4', 'footer': false,
-            exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] } },
+            exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] } },
             { extend: 'colvis', text: 'Columns'},
             ],
             "columns": [
@@ -54,6 +64,7 @@
             { "data": "cost", "render": currencyFormat, "searchable": false },
             <?php } ?>
             { "data": "price", "render": currencyFormat, "searchable": false },
+            { "data": "active", "render": pstatus },
             { "data": "Actions", "searchable": false, "orderable": false }
             ]
 
@@ -161,6 +172,7 @@
                                     <th class="col-xs-1"><?= lang("cost"); ?></th>
                                 <?php } ?>
                                 <th class="col-xs-1"><?= lang("price"); ?></th>
+                                <th class="col-xs-1"><?= lang("status"); ?></th>
                                 <th style="width:165px;"><?= lang("actions"); ?></th>
                             </tr>
                         </thead>
@@ -186,6 +198,7 @@
                                 <th class="col-xs-1"><?= lang("cost"); ?></th>
                                 <?php } ?>
                                 <th class="col-xs-1"><?= lang("price"); ?></th>
+                                <th><?= lang('status')?></th>
                                 <th style="width:165px;"><?= lang("actions"); ?></th>
                             </tr>
                             <tr>
